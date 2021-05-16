@@ -1,4 +1,6 @@
-from .feature_handler import FeatureHandler, ColorLayout, Histogram, Texture
+import cv2
+from feature_handler import FeatureHandler, ColorLayout, Histogram, Texture
+import os
 
 
 class CBIR:
@@ -52,4 +54,21 @@ class DatabaseHandler:
         pass
 
     def get_images(self):
-        pass
+        path = "/home/ayman/Downloads/image2_folder-20210416T211305Z-001/image2_folder"
+        images = []
+        for image in os.listdir(path):
+            image = cv2.imread(os.path.join(path, image))
+            images.append(image)
+
+        return images
+
+
+cbir = CBIR()
+test_img = cv2.imread("/home/ayman/Downloads/image2_folder-20210416T211305Z-001/image2_folder/thumbs_up_down.jpg") 
+matched_imgs = cbir.search("histogram" ,test_img)
+for img in matched_imgs:
+    cv2.imshow("WD", img)
+    cv2.waitKey(0)
+
+cv2.destroyAllWindows()
+
