@@ -5,10 +5,10 @@ class FeatureHandler:
     def __init__(self):
         self.matching_threshold = 0.5
 
-    def extract(self):
+    def extract(self, *args, **kwargs):
         raise NotImplementedError
 
-    def match(self):
+    def match(self, *args, **kwargs):
         raise NotImplementedError
 
 
