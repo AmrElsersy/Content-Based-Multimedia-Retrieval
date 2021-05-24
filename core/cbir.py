@@ -1,6 +1,7 @@
 import cv2
 from feature_handler import FeatureHandler, ColorLayout, Histogram, Texture
 from average_color import AverageColor
+from dominant_color import DominantColor
 import os
 
 
@@ -14,8 +15,9 @@ class CBIR:
 
         self.feature_handler = self.__get_extractor(algo_type)
         image_features = self.feature_handler.extract(image)
+        print(image_features)
         images = self.database_handler.get_images()
-        
+
         for db_image in images:
             db_image_features = self.feature_handler.extract(db_image)
             if self.feature_handler.match(image_features, db_image_features):
@@ -41,6 +43,9 @@ class CBIR:
 
         elif algo_type == "average_color":
             return AverageColor()
+
+        elif algo_type == "dominant_color":
+            return DominantColor()
         
         else:
             raise NameError("The specified algorithm isn't implemented")
@@ -69,7 +74,7 @@ class DatabaseHandler:
 
 cbir = CBIR()
 test_img = cv2.imread("/home/ayman/Downloads/image2_folder-20210416T211305Z-001/image2/thumbs_up_down.jpg") 
-matched_imgs = cbir.search("average_color" ,test_img)
+matched_imgs = cbir.search("dominant_color" ,test_img)
 # for img in matched_imgs:
 #     cv2.imshow("WD", img)
 #     cv2.waitKey(0)

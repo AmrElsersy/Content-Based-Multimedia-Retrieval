@@ -1,7 +1,6 @@
-import cv2
 import numpy as np
-from skimage import io
 from feature_handler import FeatureHandler
+import cv2
 
 
 class AverageColor(FeatureHandler):
