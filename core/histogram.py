@@ -3,7 +3,6 @@ import cv2
 from feature_handler import FeatureHandler
 
 
-
 class Histogram(FeatureHandler):
     def __init__(self, hist_size = [8, 8, 8]):
         super().__init__()
