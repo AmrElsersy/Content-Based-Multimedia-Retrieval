@@ -13,7 +13,7 @@ class DataBase:
 
     def create_table(self):
         #self._cursor.execute("CREATE DATABASE testdatabase")
-        self._cursor.execute("CREATE TABLE IF NOT EXISTS images (pth VARCHAR(1000), histogram VARCHAR(1000), dominant_color VARCHAR(1000), average_color VARCHAR(1000))")     
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS images (pth VARCHAR(1000), histogram VARCHAR(2000), dominant_color VARCHAR(1000), average_color VARCHAR(1000))")     
         self.connection.commit()
 
     def insert_into_table(self, image_path , feature_vector, algorithm):
