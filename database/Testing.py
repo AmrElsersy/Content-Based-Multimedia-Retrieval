@@ -1,4 +1,5 @@
 import mysql.connector
+import numpy as np
 
 class DataBase:
     def __init__(self):
@@ -12,12 +13,12 @@ class DataBase:
 
     def create_table(self):
         #self._cursor.execute("CREATE DATABASE testdatabase")
-        self._cursor.execute("CREATE TABLE IF NOT EXISTS images (pth VARCHAR(1000), histogram VARCHAR(1000), color_layout VARCHAR(1000), texture VARCHAR(1000))")     
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS images (pth VARCHAR(1000), histogram VARCHAR(1000), dominant_color VARCHAR(1000), average_color VARCHAR(1000))")     
         self.connection.commit()
 
     def insert_into_table(self, image_path , feature_vector, algorithm):
         # to convert array to string #
-        feature_string = ''
+        feature_string = '' 
         for i, j in zip(feature_vector, range(0, len(feature_vector))):           
             feature_string += str(i)
             if (j+1 == len(feature_vector)):
@@ -32,12 +33,12 @@ class DataBase:
                 self._cursor.execute("INSERT INTO images (pth, histogram) VALUES (%s, %s)", (image_path, feature_string))
                 self.connection.commit()
 
-            elif (algorithm == "color_layout"):
-                self._cursor.execute("INSERT INTO images (pth, color_layout) VALUES (%s, %s)", (image_path, feature_string))
+            elif (algorithm == "dominant_color"):
+                self._cursor.execute("INSERT INTO images (pth, dominant_color) VALUES (%s, %s)", (image_path, feature_string))
                 self.connection.commit()
 
-            elif (algorithm == "texture"):
-                self._cursor.execute("INSERT INTO images (pth, texture) VALUES (%s, %s)", (image_path, feature_string))
+            elif (algorithm == "average_color"):
+                self._cursor.execute("INSERT INTO images (pth, average_color) VALUES (%s, %s)", (image_path, feature_string))
                 self.connection.commit() 
 
         else:
@@ -45,12 +46,12 @@ class DataBase:
                 self._cursor.execute("UPDATE images SET histogram = %s WHERE pth = %s", (feature_string, image_path))
                 self.connection.commit()
 
-            elif (algorithm == "color_layout"):
-                self._cursor.execute("UPDATE images SET color_layout = %s WHERE pth = %s", (feature_string, image_path))
+            elif (algorithm == "dominant_color"):
+                self._cursor.execute("UPDATE images SET dominant_color = %s WHERE pth = %s", (feature_string, image_path))
                 self.connection.commit()
 
-            elif (algorithm == "texture"):
-                self._cursor.execute("UPDATE images SET texture = %s WHERE pth = %s", (feature_string, image_path))
+            elif (algorithm == "average_color"):
+                self._cursor.execute("UPDATE images SET average_color = %s WHERE pth = %s", (feature_string, image_path))
                 self.connection.commit()   
 
 
@@ -75,9 +76,10 @@ class DataBase:
 
             instance_image = []
             instance_image.append(x[0])
-            instance_image.append(feature_vector_1)
-            instance_image.append(feature_vector_2)
-            instance_image.append(feature_vector_3)
+             
+            instance_image.append(np.asarray(feature_vector_1))
+            instance_image.append(np.asarray(feature_vector_2))
+            instance_image.append(np.asarray(feature_vector_3))
             image_list.append(instance_image)
 
         return image_list
