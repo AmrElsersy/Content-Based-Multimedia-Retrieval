@@ -2,17 +2,17 @@ import mysql.connector
 
 class DataBase:
     def __init__(self):
-        self.connection =  mysql.connector.connect(host = "localhost",
-                                                user = "root",
-                                                passwd = "root",
-                                                database = "testdatabase"
+        self.connection =  mysql.connector.connect(host = "freedb.tech",
+                                                user = "freedbtech_Team",
+                                                password = "team",
+                                                database="freedbtech_Multimedia"
                                                 )
-        self._cursor = self.connection.cursor()  
+        self._cursor = self.connection.cursor()
         #self._cursor.execute("CREATE DATABASE IF NOT EXISTS testdatabase")                   
 
     def create_table(self):
         #self._cursor.execute("CREATE DATABASE testdatabase")
-        self._cursor.execute("CREATE TABLE IF NOT EXISTS images (pth VARCHAR(500) PRIMARY KEY, histogram VARCHAR(1000), color_layout VARCHAR(1000), texture VARCHAR(1000))")     
+        self._cursor.execute("CREATE TABLE IF NOT EXISTS images (pth VARCHAR(1000), histogram VARCHAR(1000), color_layout VARCHAR(1000), texture VARCHAR(1000))")     
         self.connection.commit()
 
     def insert_into_table(self, image_path , feature_vector, algorithm):
