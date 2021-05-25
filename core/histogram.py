@@ -4,20 +4,22 @@ from feature_handler import FeatureHandler
 
 
 
-class AverageColor(FeatureHandler):
-    def __init__(self):
+class Histogram(FeatureHandler):
+    def __init__(self, hist_size = [8, 8, 8]):
         super().__init__()
+        self.hist_size = hist_size
 
     def extract(self, image):
-        return image.mean(axis=0).mean(axis=0)
+        hist = cv2.calcHist([image], [0, 1, 2], mask=None, histSize=self.hist_size, ranges=[0, 256, 0, 256, 0, 256])
+        hist = hist.flatten()
+        return hist
 
     def match(self, features_1, features_2):
         # Mean Absolute Error
         MAE = np.mean(np.abs(features_1 - features_2))        
-        print(f"Match from AverageColor {MAE}")
+        print(f"Match from Histogram {MAE}")
         if MAE < self.matching_threshold:
             return True
         else:
             return False
-
 

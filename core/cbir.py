@@ -1,21 +1,26 @@
 import cv2
-from feature_handler import FeatureHandler, ColorLayout, Histogram, Texture
+import os
+import time
+
+from feature_handler import FeatureHandler
+from histogram import Histogram
 from average_color import AverageColor
 from dominant_color import DominantColor
-import os
+
 
 
 class CBIR:
     def __init__(self):
         self.database_handler = DatabaseHandler()
         
-
     def search(self, algo_type: str, image):
         matched_images = []
 
         self.feature_handler = self.__get_extractor(algo_type)
+        t1 = time.time()
         image_features = self.feature_handler.extract(image)
-        print(image_features)
+        t2 = time.time()
+        print(f"Time taken: {t2-t1}s")
         images = self.database_handler.get_images()
 
         for db_image in images:
@@ -35,12 +40,6 @@ class CBIR:
         if algo_type == "histogram":
             return Histogram()
         
-        elif algo_type == "color_layout":
-            return ColorLayout()
-
-        elif algo_type == "texture":
-            return Texture()
-
         elif algo_type == "average_color":
             return AverageColor()
 
@@ -75,9 +74,9 @@ class DatabaseHandler:
 cbir = CBIR()
 test_img = cv2.imread("/home/ayman/Downloads/image2_folder-20210416T211305Z-001/image2/thumbs_up_down.jpg") 
 matched_imgs = cbir.search("dominant_color" ,test_img)
-# for img in matched_imgs:
-#     cv2.imshow("WD", img)
-#     cv2.waitKey(0)
+for img in matched_imgs:
+    cv2.imshow("WD", img)
+    cv2.waitKey(0)
 
-# cv2.destroyAllWindows()
+cv2.destroyAllWindows()
 

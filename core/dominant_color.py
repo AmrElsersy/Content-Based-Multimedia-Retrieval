@@ -1,6 +1,7 @@
 import numpy as np
-from feature_handler import FeatureHandler
 import cv2
+from feature_handler import FeatureHandler
+
 
 
 class DominantColor(FeatureHandler):
@@ -12,6 +13,9 @@ class DominantColor(FeatureHandler):
         self.init_attempts = init_attempts
 
     def extract(self, image):
+        # Resizing image to speed computations
+        image = cv2.resize(image, (256, 256), interpolation = cv2.INTER_AREA)
+
         pixels = np.float32(image.reshape(-1,3))
 
         termination_criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, self.n_max_iter, self.eps)
@@ -28,6 +32,9 @@ class DominantColor(FeatureHandler):
         # Mean Absolute Error
         MAE = np.mean(np.abs(features_1 - features_2))        
         print(f"Match from  dominant_color {MAE}")
-        return MAE
+        if MAE < self.matching_threshold:
+            return True
+        else:
+            return False
 
 
