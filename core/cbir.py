@@ -7,6 +7,8 @@ from histogram import Histogram
 from average_color import AverageColor
 from dominant_color import DominantColor
 from matching import *
+from kmeans import KMeansCluster
+
 
 
 class CBIR:
@@ -18,7 +20,8 @@ class CBIR:
 
         self.feature_handler = self.__get_extractor(algo_type)
         t1 = time.time()
-        image_features = self.feature_handler.extract(image)
+        image_features = self.feature_handler.extract(image, False)
+        print(f"Features: {image_features}, Shape: {image_features.shape}")
         t2 = time.time()
         print(f"Time taken: {t2-t1}s")
         images = self.database_handler.get_images()
@@ -28,7 +31,7 @@ class CBIR:
 
             loss = chi_squared_match(image_features, db_image_features)
             print(f"loss: {loss}")
-            if loss < 2e4:
+            if loss < 250:
             # if self.feature_handler.match(image_features, db_image_features):
                 matched_images.append(db_image)
             else:
@@ -49,6 +52,9 @@ class CBIR:
 
         elif algo_type == "dominant_color":
             return DominantColor()
+
+        elif algo_type == "clustering":
+            return KMeansCluster()
         
         else:
             raise NameError("The specified algorithm isn't implemented")
@@ -66,7 +72,7 @@ class DatabaseHandler:
         pass
 
     def get_images(self):
-        path = "/home/ayman/Downloads/www.google.com/flowers - Google Search - 25-05-2021 23-16-00"
+        path = "/home/ayman/Downloads/www.google.com/cars - Google Search - 26-05-2021 00-17-42"
         images = []
         for image in os.listdir(path):
             image = cv2.imread(os.path.join(path, image))
@@ -76,9 +82,9 @@ class DatabaseHandler:
 
 
 cbir = CBIR()
-test_img = cv2.imread("/home/ayman/Downloads/www.google.com/flowers - Google Search - 25-05-2021 23-16-00/image (10).jpeg") 
-matched_imgs = cbir.search("average_color" ,test_img)
-time.sleep(15)
+test_img = cv2.imread("/home/ayman/Downloads/www.google.com/cars - Google Search - 26-05-2021 00-17-42/image (3).jpeg") 
+matched_imgs = cbir.search("clustering" ,test_img)
+
 for img in matched_imgs:
     cv2.imshow("WD", img)
     cv2.waitKey(0)
