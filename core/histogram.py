@@ -13,12 +13,8 @@ class Histogram(FeatureHandler):
         hist = hist.flatten()
         return hist
 
-    def match(self, features_1, features_2):
-        # Mean Absolute Error
-        MAE = np.mean(np.abs(features_1 - features_2))        
-        print(f"Match from Histogram {MAE}")
-        if MAE < self.matching_threshold:
-            return True
-        else:
-            return False
-
+    # def match(self, features_1, features_2):
+    #     # Mean Absolute Error
+    #     MAE = np.mean(np.abs(features_1 - features_2))        
+    #     print(f"Match from Histogram {MAE}")
+    #     return MAE

@@ -28,13 +28,13 @@ class DominantColor(FeatureHandler):
 
         return palette[np.argmax(counts)]
 
-    def match(self, features_1, features_2):
-        # Mean Absolute Error
-        MAE = np.mean(np.abs(features_1 - features_2))        
-        print(f"Match from  dominant_color {MAE}")
-        if MAE < self.matching_threshold:
-            return True
-        else:
-            return False
+    # def match(self, features_1, features_2):
+    #     # Mean Absolute Error
+    #     MAE = np.mean(np.abs(features_1 - features_2))        
+    #     print(f"Match from  dominant_color {MAE}")
+    #     if MAE < self.matching_threshold:
+    #         return True
+    #     else:
+    #         return False
 
 
