@@ -2,6 +2,7 @@ from mysql.connector import cursor
 import database
 import numpy as np
 
+
 if __name__ == '__main__':
     database = database.DataBase()
     #database._cursor.execute("DROP TABLE images")

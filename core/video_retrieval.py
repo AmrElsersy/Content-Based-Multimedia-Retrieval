@@ -7,7 +7,7 @@ from matching_fns import *
 
 
 class KeyframeExtraction(FeatureHandler):
-    def __init__(self, k1 = 1, k2 = 1.5, matching_threshold=150):
+    def __init__(self, k1 = 1, k2 = 1.5, matching_threshold=500):
         super().__init__()
         self.threshold_value = None
         self.k1 = k1
@@ -81,20 +81,24 @@ class KeyframeExtraction(FeatureHandler):
         print(f"No. of KeyFrames in Feature2: {features2.shape[0]}")
 
         num_of_matches = 0
+        is_matched = False
         for feat_1 in range((features1.shape[0])):
             for feat_2 in range((features2.shape[0])):
                 hist_diff = np.mean(np.abs(features1[feat_1] - features2[feat_2]))
                 print(hist_diff)
                 if hist_diff < self.matching_thresh:
-                    num_of_matches += 1
+                    # num_of_matches += 1
+                    is_matched = True
 
+            if is_matched:
+                num_of_matches += 1
+                is_matched = False
 
         print(f"num_of_matches: {num_of_matches}")
-        matching_percent = num_of_matches / (features1.shape[0] * features2.shape[0])
+        # matching_percent = num_of_matches / (features1.shape[0] * features2.shape[0])
+        matching_percent = num_of_matches / (features1.shape[0])
         print(f"Matching Percentage: {matching_percent*100}%")
         return matching_percent
-
-
 
 
 # kf = KeyframeExtraction()
@@ -102,5 +106,6 @@ class KeyframeExtraction(FeatureHandler):
 # video = cv2.VideoCapture(video_path)
 
 # feat_1 = kf.extract(video)
-# feat_2 = kf.extract(cv2.VideoCapture('/home/ayman/Videos/Screencast 2021-02-01 07:41:07.mp4'))
+# feat_2 = kf.extract(cv2.VideoCapture('/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/demo_video_test.mp4'))
 # kf.match(feat_1, feat_2)
+
