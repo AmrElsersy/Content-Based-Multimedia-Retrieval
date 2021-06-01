@@ -1,3 +1,4 @@
+from typing import Dict
 import numpy as np
 import cv2
 from numpy.core.fromnumeric import std
@@ -13,6 +14,7 @@ class KeyframeExtraction(FeatureHandler):
         self.k1 = k1
         self.k2 = k2
         self.matching_thresh = matching_threshold
+        self.max_keyframes = 20
 
 
     def __preprocess_video(self, video):
@@ -33,6 +35,7 @@ class KeyframeExtraction(FeatureHandler):
         hist_coeffs = []
         keyframes = []
         video_features = []
+        keyframes_vs_diff = {} 
 
         prev_hist = cv2.calcHist([preprocessed_frames[0]], [0], mask=None, histSize=[256], ranges=[0, 256])
 
@@ -55,6 +58,7 @@ class KeyframeExtraction(FeatureHandler):
         for i_coeff in range(len(hist_coeffs)):
             if hist_coeffs[i_coeff] > self.threshold_value:
                 keyframes.append(preprocessed_frames[i_coeff])
+                keyframes_vs_diff[i_coeff] = hist_coeffs[i_coeff]
 
         # print(f"keyframes len: {len(keyframes)}")
         # plt.plot(hist_0, 'r')
@@ -66,6 +70,21 @@ class KeyframeExtraction(FeatureHandler):
         #     cv2.imshow("WD", frame)
         #     cv2.waitKey(0)
         # cv2.destroyAllWindows()
+
+        if len(keyframes) > self.max_keyframes:
+            keyframes_truncated = []
+            keyframes_vs_diff = dict(sorted(keyframes_vs_diff.items(), key=lambda item: item[1], reverse=True))
+
+            i = 0
+            for key in keyframes_vs_diff.keys():
+                if i == self.max_keyframes:
+                    break
+                keyframes_truncated.append(preprocessed_frames[key])
+                # print(keyframes_vs_diff[key], key)
+                i += 1
+
+            keyframes = keyframes_truncated
+
         for frame in keyframes:
             hist = cv2.calcHist([frame], [0], mask=None, histSize=[256], ranges=[0, 256])
             hist = hist.flatten()
@@ -101,11 +120,11 @@ class KeyframeExtraction(FeatureHandler):
         return matching_percent
 
 
-# kf = KeyframeExtraction()
-# video_path = '/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/results/end-to-end_demo.mp4'
-# video = cv2.VideoCapture(video_path)
+kf = KeyframeExtraction()
+video_path = '/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/results/end-to-end_demo.mp4'
+video = cv2.VideoCapture(video_path)
 
-# feat_1 = kf.extract(video)
+feat_1 = kf.extract(video)
 # feat_2 = kf.extract(cv2.VideoCapture('/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/demo_video_test.mp4'))
 # kf.match(feat_1, feat_2)
 
