@@ -90,7 +90,7 @@ class KeyframeExtraction(FeatureHandler):
             hist = hist.flatten()
             video_features.append(hist)
 
-        return video_features
+        return np.array(video_features)
     
     def match(self, features1, features2):
     
@@ -120,11 +120,11 @@ class KeyframeExtraction(FeatureHandler):
         return matching_percent
 
 
-kf = KeyframeExtraction()
-video_path = '/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/results/end-to-end_demo.mp4'
-video = cv2.VideoCapture(video_path)
+# kf = KeyframeExtraction()
+# video_path = '/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/results/end-to-end_demo.mp4'
+# video = cv2.VideoCapture(video_path)
 
-feat_1 = kf.extract(video)
+# feat_1 = kf.extract(video)
 # feat_2 = kf.extract(cv2.VideoCapture('/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/demo_video_test.mp4'))
 # kf.match(feat_1, feat_2)
 
