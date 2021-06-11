@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>../../../../Assignment2/40-403032_instagramm-clipart-cartoon-icon-instagram-png-flat.png</file>
+    <file>../../../../Assignment2/11.jpg</file>
+    <file>../../../../Assignment2/22a79ca979c8a8f00435cf698d9f0d95.jpg</file>
+    <file>../../../../Assignment2/2584212d252a0eb8159c4174c12c9fda.jpg</file>
+    <file>../../../../Assignment2/fond-hiver-pinceaux-feuilles-couleur-pastel_220290-42.jpg</file>
+    <file>../../../../Assignment2/202-2021806_password-icon-png-train-station-icon-vector-transparent.png</file>
+    <file>../../../../Assignment2/user-login-icon-14.png</file>
+    <file>log.png</file>
+    <file>add-circle-512_35198.png</file>
+    <file>71-715167_pharmacist-icon-blue-illustration-clipart.png</file>
+  </qresource>
+</RCC>

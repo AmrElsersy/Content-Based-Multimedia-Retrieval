@@ -1,0 +1,14 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>11.jpg</file>
+    <file>login-icon-png-2.jpg</file>
+    <file>kisspng-computer-icons-user-clip-art-consignee-5b2d25107181a2.1674732415296852644649.jpg</file>
+    <file>png-clipart-computer-icons-user-profile-avatar-avatar-heroes-monochrome.png</file>
+    <file>login.jpg</file>
+    <file>pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_5247852.jpg</file>
+    <file>202-2021806_password-icon-png-train-station-icon-vector-transparent.png</file>
+  </qresource>
+  <qresource prefix="newPrefix">
+    <file>pngtree-avatar-icon-profile-icon-member-login-vector-isolated-png-image_5247852.jpg</file>
+  </qresource>
+</RCC>
