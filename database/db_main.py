@@ -18,7 +18,7 @@ if __name__ == '__main__':
     #array1 = np.array([5.6, 8.9, 11.3])
     b=np.full((2, 10), 33333)
     #database.insert_video('https://blog.codinghorror.com/filesystem-paths-how-long-is-too-long/#:~:text=In%20the%20Windows%20API%20(with,and%20a%20terminating%20null%20character.', a)
-    #database.insert_video('https://blog.codinghorror.com/filesystem-paths-how-long-is-too-long/', b)
+    #database.insert_video('C:/Users/Dina/Desktop/Content-Based-Multimedia-Retrieval/videos/ocean.mp4', b)
     
     #database.insert_into_table('https://blog.codinghorror.com/filesystem-paths-how-long-is-too-long/#:~:text=In%20the%20Windows%20API%20(with,and%20a%20terminating%20null%20character.', array, 'average_color')
     #print(b)

@@ -5,7 +5,7 @@ import sys
 
 from numpy.lib.histograms import histogram
 
-sys.path.insert(1, '/home/ayman/FOE-Linux/Task/Content-Based-Multimedia-Retrieval')
+sys.path.insert(1, 'C:/Users/Dina/Desktop/Content-Based-Multimedia-Retrieval')
 
 from feature_handler import FeatureHandler
 from histogram import Histogram

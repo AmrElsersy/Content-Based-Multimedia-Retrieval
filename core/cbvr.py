@@ -1,15 +1,22 @@
 from typing import Dict
 import numpy as np
 import cv2
+import sys
+
+sys.path.insert(1, 'C:/Users/Dina/Desktop/Content-Based-Multimedia-Retrieval')
+
 from numpy.core.fromnumeric import std
 from feature_handler import FeatureHandler
 import matplotlib.pyplot as plt
+from database.database import DataBase
 from matching_fns import *
 
 
-class KeyframeExtraction(FeatureHandler):
+
+class CBVR(FeatureHandler):
     def __init__(self, k1 = 1, k2 = 1.5, matching_threshold=500):
         super().__init__()
+        self.database_handler = DataBase()
         self.threshold_value = None
         self.k1 = k1
         self.k2 = k2
@@ -119,6 +126,12 @@ class KeyframeExtraction(FeatureHandler):
         print(f"Matching Percentage: {matching_percent*100}%")
         return matching_percent
 
+    def insert(self, video_path):
+        video = cv2.VideoCapture(video_path)
+
+        features = self.extract(video)
+
+        self.database_handler.insert_video(video_path, features)
 
 # kf = KeyframeExtraction()
 # video_path = '/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/results/end-to-end_demo.mp4'
@@ -128,3 +141,6 @@ class KeyframeExtraction(FeatureHandler):
 # feat_2 = kf.extract(cv2.VideoCapture('/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/demo_video_test.mp4'))
 # kf.match(feat_1, feat_2)
 
+cbvr = CBVR()
+
+cbvr.insert("./videos/ocean.mp4")
