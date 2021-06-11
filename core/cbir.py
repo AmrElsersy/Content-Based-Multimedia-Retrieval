@@ -5,7 +5,7 @@ import sys
 
 from numpy.lib.histograms import histogram
 
-sys.path.insert(1, 'C:/Users/Dina/Desktop/Content-Based-Multimedia-Retrieval')
+sys.path.insert(1, '/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval')
 
 from feature_handler import FeatureHandler
 from histogram import Histogram
@@ -102,21 +102,21 @@ class CBIR:
             raise NameError("The specified matching_fn isn't implemented")
 
 
-cbir = CBIR()
+# cbir = CBIR()
+#
+# test_img = cv2.imread("/home/ayman/Downloads/www.google.com/flowers - Google Search - 25-05-2021 23-16-00/image (26).jpeg")
+# matched_imgs = cbir.search(algo_type="mean_color", image=test_img, matching_fn="mean_abs_match")
+# # print(matched_imgs)
+#
+# for img in matched_imgs.keys():
+#     print(f"{img} - loss: {matched_imgs[img]}")
+#     img = cv2.imread(img)
+#     cv2.imshow("WD", img)
+#     cv2.waitKey(0)
+# cv2.destroyAllWindows()
 
-test_img = cv2.imread("/home/ayman/Downloads/www.google.com/flowers - Google Search - 25-05-2021 23-16-00/image (26).jpeg") 
-matched_imgs = cbir.search(algo_type="mean_color", image=test_img, matching_fn="mean_abs_match")
-# print(matched_imgs)
-
-for img in matched_imgs.keys():
-    print(f"{img} - loss: {matched_imgs[img]}")
-    img = cv2.imread(img)
-    cv2.imshow("WD", img)
-    cv2.waitKey(0)
-cv2.destroyAllWindows()
-
-imgs_path1 = '/home/ayman/Downloads/www.google.com/cars - Google Search - 26-05-2021 00-17-42'
-imgs_path2 = '/home/ayman/Downloads/www.google.com/flowers - Google Search - 25-05-2021 23-16-00'
+#imgs_path1 = '/home/ayman/Downloads/www.google.com/cars - Google Search - 26-05-2021 00-17-42'
+#imgs_path2 = '/home/ayman/Downloads/www.google.com/flowers - Google Search - 25-05-2021 23-16-00'
 
 
 # for img_path in os.listdir(imgs_path1):

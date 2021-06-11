@@ -103,15 +103,15 @@ class CBVR(FeatureHandler):
     
         features1 = np.array(features1)
         features2 = np.array(features2)
-        print(f"No. of KeyFrames in Feature1: {features1.shape[0]}")
-        print(f"No. of KeyFrames in Feature2: {features2.shape[0]}")
+        # print(f"No. of KeyFrames in Feature1: {features1.shape[0]}")
+        # print(f"No. of KeyFrames in Feature2: {features2.shape[0]}")
 
         num_of_matches = 0
         is_matched = False
         for feat_1 in range((features1.shape[0])):
             for feat_2 in range((features2.shape[0])):
                 hist_diff = np.mean(np.abs(features1[feat_1] - features2[feat_2]))
-                print(hist_diff)
+#                print(hist_diff)
                 if hist_diff < self.matching_thresh:
                     # num_of_matches += 1
                     is_matched = True
@@ -133,6 +133,17 @@ class CBVR(FeatureHandler):
 
         self.database_handler.insert_video(video_path, features)
 
+    def search(self, video):
+        matched_vids = []
+        vid_features = self.extract(video)
+        db_vids = self.database_handler.get_videos()
+        for db_video in db_vids:
+            db_path, db_features = db_video[0], db_video[1]
+            print(db_path)
+        if self.match(vid_features, db_features) > 0.5:
+            matched_vids.append(db_path)
+        return matched_vids
+
 # kf = KeyframeExtraction()
 # video_path = '/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/results/end-to-end_demo.mp4'
 # video = cv2.VideoCapture(video_path)
@@ -140,7 +151,7 @@ class CBVR(FeatureHandler):
 # feat_1 = kf.extract(video)
 # feat_2 = kf.extract(cv2.VideoCapture('/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/demo_video_test.mp4'))
 # kf.match(feat_1, feat_2)
-
-cbvr = CBVR()
-
-cbvr.insert("./videos/ocean.mp4")
+#
+# cbvr = CBVR()
+#
+# cbvr.insert("./videos/ocean.mp4")
