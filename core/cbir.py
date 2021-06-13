@@ -5,7 +5,8 @@ import sys
 
 from numpy.lib.histograms import histogram
 
-sys.path.insert(1, '/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval')
+sys.path.insert(0, '../')
+sys.path.insert(1, '../Content-Based-Multimedia-Retrieval')
 
 from feature_handler import FeatureHandler
 from histogram import Histogram
@@ -37,16 +38,16 @@ class CBIR:
 
         for element in db_query_images:
             # hist, domin, aver
-            db_img_feature = element[ self.algo_index[algo_type] ] 
-            loss = self.__get_matching_loss(matching_fn, image_features, db_img_feature) 
+            db_img_feature = element[ self.algo_index[algo_type] ]
+            loss = self.__get_matching_loss(matching_fn, image_features, db_img_feature)
             print(f"Loss: {loss}")
             if loss < self.matching_threshold:
                 # if self.feature_handler.match(image_features, db_image_features):
                 matched_images[str(element[0])] = loss
-            
-        
+
+
         return dict(sorted(matched_images.items(), key=lambda item: item[1]))
-        
+
 
     def insert(self, img_path):
         img = cv2.imread(img_path)
@@ -66,7 +67,7 @@ class CBIR:
             self.matching_threshold = 50
             return Histogram()
 
-        
+
         elif algo_type == "mean_color":
             self.matching_threshold = 40
             return MeanColor()
@@ -82,7 +83,7 @@ class CBIR:
     def __get_matching_loss(self, matching_fn, feature1, feature2):
         if matching_fn == "mean_square_match":
             return mean_square_match(feature1, feature2)
-        
+
         elif matching_fn == "mean_abs_match":
             return mean_abs_match(feature1, feature2)
 
@@ -91,7 +92,7 @@ class CBIR:
 
         elif matching_fn == "spatial_cosine_match":
             return spatial_cosine_match(feature1, feature2)
-        
+
         elif matching_fn == "chi_squared_match":
             return chi_squared_match(feature1, feature2)
 
@@ -115,8 +116,11 @@ class CBIR:
 #     cv2.waitKey(0)
 # cv2.destroyAllWindows()
 
-#imgs_path1 = '/home/ayman/Downloads/www.google.com/cars - Google Search - 26-05-2021 00-17-42'
-#imgs_path2 = '/home/ayman/Downloads/www.google.com/flowers - Google Search - 25-05-2021 23-16-00'
+
+# cbir.database_handler.delete_images_rows()
+
+# imgs_path1 = '../images/Flowers'
+# imgs_path2 = '../images/Cars'
 
 
 # for img_path in os.listdir(imgs_path1):

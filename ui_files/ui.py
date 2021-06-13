@@ -208,9 +208,9 @@ class MainWindow(QtWidgets.QMainWindow):
         print('hnaa')
         self.ui.widget = QtWidgets.QWidget()
         self.ui.layout = QtWidgets.QVBoxLayout()
-        for i in images_dict.keys():
-            abs_path = "C:/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval/core/"
-            path = abs_path + i
+        for path in images_dict.keys():
+            # abs_path = "C:/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval/core/"
+            # path = abs_path + i
             print(path)
             pixaya = QtGui.QPixmap(path)
             self.ui.new_label = QtWidgets.QLabel()
@@ -231,9 +231,9 @@ class MainWindow(QtWidgets.QMainWindow):
         images_dict = self.cbir.search( "mean_color", image, "mean_abs_match")
         self.ui.widget = QtWidgets.QWidget()
         self.ui.layout = QtWidgets.QVBoxLayout()
-        for i in images_dict.keys():
-            abs_path = "C:/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval/core/"
-            path = abs_path + i
+        for path in images_dict.keys():
+            # abs_path = "C:/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval/core/"
+            # path = abs_path + i
             print(path)
             pixaya = QtGui.QPixmap(path)
             self.ui.new_label = QtWidgets.QLabel()
@@ -254,9 +254,9 @@ class MainWindow(QtWidgets.QMainWindow):
         print('hnaa')
         self.ui.widget = QtWidgets.QWidget()
         self.ui.layout = QtWidgets.QVBoxLayout()
-        for i in images_dict.keys():
-            abs_path = "C:/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval/core/"
-            path = abs_path + i
+        for path in images_dict.keys():
+            # abs_path = "C:/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval/core/"
+            # path = abs_path + i
             print(path)
             pixaya = QtGui.QPixmap(path)
             self.ui.new_label = QtWidgets.QLabel()
