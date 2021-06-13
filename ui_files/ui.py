@@ -6,7 +6,7 @@ import sys
 sys.path.insert(0, '../../Content-Based-Multimedia-Retrieval')
 sys.path.insert(1, '../core')
 
-import cv2
+import cv2, os
 from datetime import datetime, timedelta
 from PyQt5.QtCore import QDir, Qt, QUrl
 from cbir import CBIR
@@ -277,7 +277,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.wid = QtWidgets.QWidget()
         self.ui.layout = QtWidgets.QVBoxLayout()
         self.group = QtWidgets.QButtonGroup()
-        print(self.videos_paths)
+
         for i in range(len(self.videos_paths)):
             self.ui.hlay = QtWidgets.QHBoxLayout()
             self.ui.Button = QPushButton()
@@ -300,6 +300,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.group.buttonClicked.connect(self.vid_play)
 
     def vid_play(self, object):
+        self.videos_paths = [os.path.join(os.getcwd(), '../videos', path) for path in self.videos_paths]
+
         self.ui.stackedWidget_2.setCurrentIndex(4)
         print(self.group.id(object))
         self.mediaPlayerShow.setMedia(
