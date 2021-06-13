@@ -2,7 +2,10 @@ import os
 
 from PyQt5 import QtWidgets, QtCore, QtGui
 import sys
-sys.path.insert(1, '/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval/core')
+
+sys.path.insert(0, '../../Content-Based-Multimedia-Retrieval')
+sys.path.insert(1, '../core')
+
 import cv2
 from datetime import datetime, timedelta
 from PyQt5.QtCore import QDir, Qt, QUrl
@@ -15,7 +18,6 @@ from PyQt5.QtWidgets import (QMessageBox,QApplication, QFileDialog, QHBoxLayout,
         QPushButton, QSizePolicy, QSlider, QStyle, QVBoxLayout, QWidget)
 from master import Ui_MainWindow
 
-sys.path.insert(1, '/Users/esmaa/Desktop/Multimedia/Content-Based-Multimedia-Retrieval')
 class MainWindow(QtWidgets.QMainWindow):
 
 
@@ -269,8 +271,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.scrollArea.setWidget(self.ui.widget)
 
     def video_histo_search(self):
-        video = cv2.VideoCapture(self.ui.lineEdit_2.text())
-        self.videos_paths = self.cbvr.search(video)
+        video_path = self.ui.lineEdit_2.text()
+        video = cv2.VideoCapture(video_path)
+        self.videos_paths = self.cbvr.search(video, video_path)
         self.ui.wid = QtWidgets.QWidget()
         self.ui.layout = QtWidgets.QVBoxLayout()
         self.group = QtWidgets.QButtonGroup()

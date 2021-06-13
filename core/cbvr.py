@@ -3,7 +3,8 @@ import numpy as np
 import cv2
 import sys
 
-sys.path.insert(1, 'C:/Users/Dina/Desktop/Content-Based-Multimedia-Retrieval')
+sys.path.insert(0, '../../Content-Based-Multimedia-Retrieval')
+sys.path.insert(1, '../core')
 
 from numpy.core.fromnumeric import std
 from feature_handler import FeatureHandler
@@ -14,13 +15,14 @@ from matching_fns import *
 
 
 class CBVR(FeatureHandler):
-    def __init__(self, k1 = 1, k2 = 1.5, matching_threshold=500):
+    def __init__(self, k1 = 1, k2 = 1.5, matching_threshold=750):
         super().__init__()
         self.database_handler = DataBase()
         self.threshold_value = None
         self.k1 = k1
         self.k2 = k2
         self.matching_thresh = matching_threshold
+        self.matching_percentage = 0.5
         self.max_keyframes = 20
 
 
@@ -42,7 +44,7 @@ class CBVR(FeatureHandler):
         hist_coeffs = []
         keyframes = []
         video_features = []
-        keyframes_vs_diff = {} 
+        keyframes_vs_diff = {}
 
         prev_hist = cv2.calcHist([preprocessed_frames[0]], [0], mask=None, histSize=[256], ranges=[0, 256])
 
@@ -98,9 +100,9 @@ class CBVR(FeatureHandler):
             video_features.append(hist)
 
         return np.array(video_features)
-    
+
     def match(self, features1, features2):
-    
+
         features1 = np.array(features1)
         features2 = np.array(features2)
         # print(f"No. of KeyFrames in Feature1: {features1.shape[0]}")
@@ -133,16 +135,25 @@ class CBVR(FeatureHandler):
 
         self.database_handler.insert_video(video_path, features)
 
-    def search(self, video):
+
+    def parse_video_path(self, path):
+        return path.split('/')[-1]
+
+    def search(self, video, video_path):
+        video_path = self.parse_video_path(video_path)
         matched_vids = []
         vid_features = self.extract(video)
         db_vids = self.database_handler.get_videos()
         for db_video in db_vids:
             db_path, db_features = db_video[0], db_video[1]
-            print(db_path)
-        if self.match(vid_features, db_features) > 0.5:
-            matched_vids.append(db_path)
+            db_path = self.parse_video_path(db_path)
+            if db_path == video_path:
+                continue
+
+            if self.match(vid_features, db_features) > self.matching_percentage:
+                matched_vids.append(db_path)
         return matched_vids
+
 
 # kf = KeyframeExtraction()
 # video_path = '/home/ayman/FOE-Linux/Graduation_Project/Stereo-3D-Detection/results/end-to-end_demo.mp4'
@@ -153,5 +164,8 @@ class CBVR(FeatureHandler):
 # kf.match(feat_1, feat_2)
 #
 # cbvr = CBVR()
-#
-# cbvr.insert("./videos/ocean.mp4")
+# cbvr.database_handler.delete_videos_rows()
+
+# cbvr.insert("../videos/ocean.mp4")
+# cbvr.insert("../videos/yellow grass.mp4")
+# cbvr.insert("../videos/sea waves.mp4")
